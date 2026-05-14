@@ -9,6 +9,7 @@ Standalone skills sit at the repo root. **Bundles** — groups of related skills
 ```
 .
 ├── artifact.md              # standalone skill
+├── growth-sprint.md         # standalone skill
 ├── claude-skills-guide.md   # reference doc
 └── cpr/                     # bundle: compress + preserve + resume
     ├── compress.md
@@ -21,6 +22,7 @@ Standalone skills sit at the repo root. **Bundles** — groups of related skills
 | Skill | Bundle | Source | What it does |
 |---|---|---|---|
 | [`artifact`](artifact.md) | — | Built | Generates a self-contained HTML artifact (React + Tailwind, vanilla HTML/JS, SVG, or markdown), saves it to `~/Developer/artifacts/`, and auto-opens it in the browser. Closes the "artifacts gap" between Claude Code and the Claude app. |
+| [`growth-sprint`](growth-sprint.md) | — | Built | Audits a project's current state (git history, strategy docs, tech stack, explicit exclusions) via an Explore agent, pauses for confirmation, then drafts a daily-execution sprint plan — 30/60/90 days — with 5 concrete tasks per day, 6-phase structure, standing daily habits, weekly cadence, and realistic outcomes. Saves to `~/Desktop/` and mirrors to Obsidian vault. |
 | [`compress`](cpr/compress.md) | [`cpr`](cpr/) | External — [EliaAlberti/cpr](https://github.com/EliaAlberti/cpr-compress-preserve-resume) | Prepares preservation notes before `/compact` and saves the full session to searchable logs. |
 | [`preserve`](cpr/preserve.md) | [`cpr`](cpr/) | External — [EliaAlberti/cpr](https://github.com/EliaAlberti/cpr-compress-preserve-resume) | Extracts the durable lessons from a session and writes them to `CLAUDE.md` so future conversations inherit them. |
 | [`resume`](cpr/resume.md) | [`cpr`](cpr/) | External — [EliaAlberti/cpr](https://github.com/EliaAlberti/cpr-compress-preserve-resume) | Loads context at the start of a session from `CLAUDE.md` + recent session logs. |
@@ -82,6 +84,7 @@ Once installed, invoke a skill with a slash command:
 
 ```
 /artifact pomodoro timer with start/pause
+/growth-sprint aiopsforge 60
 /compress
 /preserve
 /resume
