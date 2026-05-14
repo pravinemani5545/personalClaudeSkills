@@ -2,15 +2,29 @@
 
 My personal collection of [Claude Code](https://claude.com/claude-code) skills — a mix of ones I built from scratch and external ones I've adopted into my workflow. Each skill is a single markdown file that gets dropped into `~/.claude/skills/` and invoked as a slash command.
 
+## Repo layout
+
+Standalone skills sit at the repo root. **Bundles** — groups of related skills designed to work together — live in their own subfolder. Skills install flat into `~/.claude/skills/` regardless of where they live in the repo; the folder is purely for organization here.
+
+```
+.
+├── artifact.md              # standalone skill
+├── claude-skills-guide.md   # reference doc
+└── cpr/                     # bundle: compress + preserve + resume
+    ├── compress.md
+    ├── preserve.md
+    └── resume.md
+```
+
 ## What's in here
 
-| Skill | Source | What it does |
-|---|---|---|
-| [`artifact`](artifact.md) | Built | Generates a self-contained HTML artifact (React + Tailwind, vanilla HTML/JS, SVG, or markdown), saves it to `~/Developer/artifacts/`, and auto-opens it in the browser. Closes the "artifacts gap" between Claude Code and the Claude app. |
-| [`compress`](compress.md) | External — [EliaAlberti/cpr](https://github.com/EliaAlberti/cpr-compress-preserve-resume) | Prepares preservation notes before `/compact` and saves the full session to searchable logs. |
-| [`preserve`](preserve.md) | External — [EliaAlberti/cpr](https://github.com/EliaAlberti/cpr-compress-preserve-resume) | Extracts the durable lessons from a session and writes them to `CLAUDE.md` so future conversations inherit them. |
-| [`resume`](resume.md) | External — [EliaAlberti/cpr](https://github.com/EliaAlberti/cpr-compress-preserve-resume) | Loads context at the start of a session from `CLAUDE.md` + recent session logs. |
-| [`claude-skills-guide`](claude-skills-guide.md) | Reference doc | Not a skill — a guide explaining how Claude Code skills work and how to create your own. |
+| Skill | Bundle | Source | What it does |
+|---|---|---|---|
+| [`artifact`](artifact.md) | — | Built | Generates a self-contained HTML artifact (React + Tailwind, vanilla HTML/JS, SVG, or markdown), saves it to `~/Developer/artifacts/`, and auto-opens it in the browser. Closes the "artifacts gap" between Claude Code and the Claude app. |
+| [`compress`](cpr/compress.md) | [`cpr`](cpr/) | External — [EliaAlberti/cpr](https://github.com/EliaAlberti/cpr-compress-preserve-resume) | Prepares preservation notes before `/compact` and saves the full session to searchable logs. |
+| [`preserve`](cpr/preserve.md) | [`cpr`](cpr/) | External — [EliaAlberti/cpr](https://github.com/EliaAlberti/cpr-compress-preserve-resume) | Extracts the durable lessons from a session and writes them to `CLAUDE.md` so future conversations inherit them. |
+| [`resume`](cpr/resume.md) | [`cpr`](cpr/) | External — [EliaAlberti/cpr](https://github.com/EliaAlberti/cpr-compress-preserve-resume) | Loads context at the start of a session from `CLAUDE.md` + recent session logs. |
+| [`claude-skills-guide`](claude-skills-guide.md) | — | Reference doc | Not a skill — a guide explaining how Claude Code skills work and how to create your own. |
 
 > **Source legend** — *Built*: I wrote this skill. *External*: adopted from someone else's published work (lightly modified or used as-is) — credit linked. *Reference*: documentation, not a runnable skill.
 
@@ -20,18 +34,34 @@ Skills live in `~/.claude/skills/`. Claude Code picks them up automatically — 
 
 ### Install everything
 
+Flattens all skills (root + bundles) into `~/.claude/skills/`, skipping the README and the reference guide:
+
 ```bash
 git clone https://github.com/pravinemani5545/personalClaudeSkills.git
 cd personalClaudeSkills
 mkdir -p ~/.claude/skills
-cp *.md ~/.claude/skills/
+find . -name "*.md" \
+  -not -name "README.md" \
+  -not -name "claude-skills-guide.md" \
+  -exec cp {} ~/.claude/skills/ \;
+```
+
+### Install a single bundle
+
+```bash
+cp cpr/*.md ~/.claude/skills/
 ```
 
 ### Install one skill
 
 ```bash
+# standalone
 curl -o ~/.claude/skills/artifact.md \
   https://raw.githubusercontent.com/pravinemani5545/personalClaudeSkills/main/artifact.md
+
+# from a bundle
+curl -o ~/.claude/skills/compress.md \
+  https://raw.githubusercontent.com/pravinemani5545/personalClaudeSkills/main/cpr/compress.md
 ```
 
 ### Symlink instead (recommended for active development)
@@ -40,11 +70,10 @@ If you want edits in this repo to take effect immediately, symlink instead of co
 
 ```bash
 mkdir -p ~/.claude/skills
-for f in *.md; do
-  [ "$f" = "README.md" ] && continue
-  [ "$f" = "claude-skills-guide.md" ] && continue
-  ln -sf "$(pwd)/$f" ~/.claude/skills/"$f"
-done
+find . -name "*.md" \
+  -not -name "README.md" \
+  -not -name "claude-skills-guide.md" \
+  -exec sh -c 'ln -sf "$(pwd)/$1" ~/.claude/skills/"$(basename "$1")"' _ {} \;
 ```
 
 ## Use
