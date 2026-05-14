@@ -7,12 +7,12 @@ My personal collection of [Claude Code](https://claude.com/claude-code) skills �
 | Skill | Source | What it does |
 |---|---|---|
 | [`artifact`](artifact.md) | Built | Generates a self-contained HTML artifact (React + Tailwind, vanilla HTML/JS, SVG, or markdown), saves it to `~/Developer/artifacts/`, and auto-opens it in the browser. Closes the "artifacts gap" between Claude Code and the Claude app. |
-| [`compress`](compress.md) | External (CPR bundle) | Prepares preservation notes before `/compact` and saves the full session to searchable logs. |
-| [`preserve`](preserve.md) | External (CPR bundle) | Extracts the durable lessons from a session and writes them to `CLAUDE.md` so future conversations inherit them. |
-| [`resume`](resume.md) | External (CPR bundle) | Loads context at the start of a session from `CLAUDE.md` + recent session logs. |
+| [`compress`](compress.md) | External — [EliaAlberti/cpr](https://github.com/EliaAlberti/cpr-compress-preserve-resume) | Prepares preservation notes before `/compact` and saves the full session to searchable logs. |
+| [`preserve`](preserve.md) | External — [EliaAlberti/cpr](https://github.com/EliaAlberti/cpr-compress-preserve-resume) | Extracts the durable lessons from a session and writes them to `CLAUDE.md` so future conversations inherit them. |
+| [`resume`](resume.md) | External — [EliaAlberti/cpr](https://github.com/EliaAlberti/cpr-compress-preserve-resume) | Loads context at the start of a session from `CLAUDE.md` + recent session logs. |
 | [`claude-skills-guide`](claude-skills-guide.md) | Reference doc | Not a skill — a guide explaining how Claude Code skills work and how to create your own. |
 
-> **Source legend** — *Built*: I wrote this skill. *External*: adopted from someone else's published work (lightly modified or used as-is). *Reference*: documentation, not a runnable skill.
+> **Source legend** — *Built*: I wrote this skill. *External*: adopted from someone else's published work (lightly modified or used as-is) — credit linked. *Reference*: documentation, not a runnable skill.
 
 ## Install
 
